@@ -34,7 +34,10 @@ class google_news_readerTests: XCTestCase {
     }
     
     func testFetchAllArticles() {
-        XCTAssertNotNil(NetworkManager().fetchAllArticles())
+        NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
+            XCTAssertNotNil(data)
+            XCTAssertNil(error)
+        }
     }
     
 }
