@@ -22,4 +22,8 @@ class NetworkManager: NSObject {
             completion(data: data, error: error)
         }.resume()
     }
+    
+    func parseAllArticleData(data: NSData) {
+        
+    }
 }

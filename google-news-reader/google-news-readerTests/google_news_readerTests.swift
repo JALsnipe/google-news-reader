@@ -40,4 +40,8 @@ class google_news_readerTests: XCTestCase {
         }
     }
     
+    func testParseAllArticleData() {
+        NetworkManager().parseAllArticleData(NSData())
+    }
+    
 }
