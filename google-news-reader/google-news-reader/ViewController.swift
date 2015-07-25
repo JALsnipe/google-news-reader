@@ -18,6 +18,7 @@ class ViewController: UIViewController {
             if let unwrappedData = data as? NSData {
                 NetworkManager().parseAllArticleData(unwrappedData, completion: { (content, error) -> Void in
                     print(content)
+                    print(error)
                 })
             }
         }
