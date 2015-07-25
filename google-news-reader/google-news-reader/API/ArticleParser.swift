@@ -9,5 +9,57 @@
 import UIKit
 
 class ArticleParser: NSObject {
+    
+    var data: NSData!
+    var parser: NSXMLParser!
+    
+    var element = ""
+    var titles = [String]()
+    var title = ""
+    
+    convenience init (data: NSData) {
+        self.init()
+        
+        self.data = data
+        self.parser = NSXMLParser(data: data)
+        self.parser.delegate = self
+    }
+    
+    func parseDataWithCompletion(completion: (success: Bool) -> Void) {
+        completion(success: self.parser.parse())
+    }
+}
 
+extension ArticleParser: NSXMLParserDelegate {
+    
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+//        print("elementName: \(elementName)")
+//        print("namespaceURI: \(namespaceURI)")
+//        print("qName: \(qName)")
+//        print("attributeDict: \(attributeDict)")
+        
+        self.element = elementName
+        
+        if self.element == "item" {
+            // new element, clear title
+            self.title = ""
+        }
+    }
+    
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
+//        print("foundCharacters: \(string)")
+        if self.element == "title" {
+            self.title += string
+        }
+    }
+    
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        
+        if elementName == "item" {
+            if !self.title.isEmpty {
+                self.titles.append(self.title)
+                print(self.title)
+            }
+        }
+    }
 }
