@@ -15,6 +15,7 @@
 		5F98D1E01B62DC1100FAB688 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F98D1DE1B62DC1100FAB688 /* LaunchScreen.storyboard */; };
 		5F98D1EB1B62DC1100FAB688 /* google_news_readerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F98D1EA1B62DC1100FAB688 /* google_news_readerTests.swift */; };
 		5F98D1F61B62DC1100FAB688 /* google_news_readerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F98D1F51B62DC1100FAB688 /* google_news_readerUITests.swift */; };
+		6CAD41D51B64356300436298 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAD41D41B64356300436298 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		5F98D1F11B62DC1100FAB688 /* google-news-readerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "google-news-readerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F98D1F51B62DC1100FAB688 /* google_news_readerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = google_news_readerUITests.swift; sourceTree = "<group>"; };
 		5F98D1F71B62DC1100FAB688 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CAD41D41B64356300436298 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = API/NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		5F98D1D11B62DC1100FAB688 /* google-news-reader */ = {
 			isa = PBXGroup;
 			children = (
+				6CAD41D31B64354900436298 /* API */,
 				5F98D1D21B62DC1100FAB688 /* AppDelegate.swift */,
 				5F98D1D41B62DC1100FAB688 /* ViewController.swift */,
 				5F98D1D61B62DC1100FAB688 /* Main.storyboard */,
@@ -126,6 +129,14 @@
 				5F98D1F71B62DC1100FAB688 /* Info.plist */,
 			);
 			path = "google-news-readerUITests";
+			sourceTree = "<group>";
+		};
+		6CAD41D31B64354900436298 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				6CAD41D41B64356300436298 /* NetworkManager.swift */,
+			);
+			name = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CAD41D51B64356300436298 /* NetworkManager.swift in Sources */,
 				5F98D1D51B62DC1100FAB688 /* ViewController.swift in Sources */,
 				5F98D1D31B62DC1100FAB688 /* AppDelegate.swift in Sources */,
 				5F98D1DB1B62DC1100FAB688 /* google_news_reader.xcdatamodeld in Sources */,
@@ -485,6 +497,7 @@
 				5F98D1FC1B62DC1100FAB688 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5F98D1FD1B62DC1100FAB688 /* Build configuration list for PBXNativeTarget "google-news-readerTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +506,7 @@
 				5F98D1FF1B62DC1100FAB688 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5F98D2001B62DC1100FAB688 /* Build configuration list for PBXNativeTarget "google-news-readerUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +515,7 @@
 				5F98D2021B62DC1100FAB688 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

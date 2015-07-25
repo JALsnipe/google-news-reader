@@ -33,4 +33,8 @@ class google_news_readerTests: XCTestCase {
         }
     }
     
+    func testFetchAllArticles() {
+        XCTAssertNotNil(NetworkManager().fetchAllArticles())
+    }
+    
 }
