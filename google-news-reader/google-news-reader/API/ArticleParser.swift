@@ -30,24 +30,21 @@ class ArticleParser: NSObject {
     }
 }
 
+// MARK: NSXMLParserDelegate Methods
+
 extension ArticleParser: NSXMLParserDelegate {
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-//        print("elementName: \(elementName)")
-//        print("namespaceURI: \(namespaceURI)")
-//        print("qName: \(qName)")
-//        print("attributeDict: \(attributeDict)")
         
         self.element = elementName
         
         if self.element == "item" {
-            // new element, clear title
+            // next element, clear title
             self.title = ""
         }
     }
     
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-//        print("foundCharacters: \(string)")
         if self.element == "title" {
             self.title += string
         }

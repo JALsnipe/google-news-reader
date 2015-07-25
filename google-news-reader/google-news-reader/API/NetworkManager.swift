@@ -15,9 +15,6 @@ class NetworkManager: NSObject {
         let request = NSURLRequest(URL: NSURL(string: "http://news.google.com/?output=rss")!)
         
         NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
-//            print(data)
-//            print(response)
-//            print(error)
             
             completion(data: data, error: error)
         }.resume()
