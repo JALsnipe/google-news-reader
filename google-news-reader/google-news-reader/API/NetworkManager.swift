@@ -24,6 +24,26 @@ class NetworkManager: NSObject {
     }
     
     func parseAllArticleData(data: NSData) {
-        
+        let parser = NSXMLParser(data: data)
+        parser.delegate = self
+        if parser.parse() {
+            print("success")
+        } else {
+            print("error")
+        }
+    }
+}
+
+extension NetworkManager: NSXMLParserDelegate {
+    
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        print("elementName: \(elementName)")
+        print("namespaceURI: \(namespaceURI)")
+        print("qName: \(qName)")
+        print("attributeDict: \(attributeDict)")
+    }
+    
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
+        print("foundCharacters: \(string)")
     }
 }

@@ -15,6 +15,7 @@
 		5F98D1E01B62DC1100FAB688 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F98D1DE1B62DC1100FAB688 /* LaunchScreen.storyboard */; };
 		5F98D1EB1B62DC1100FAB688 /* google_news_readerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F98D1EA1B62DC1100FAB688 /* google_news_readerTests.swift */; };
 		5F98D1F61B62DC1100FAB688 /* google_news_readerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F98D1F51B62DC1100FAB688 /* google_news_readerUITests.swift */; };
+		6C0797FA1B643EBB008C1B35 /* ArticleParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0797F91B643EBB008C1B35 /* ArticleParser.swift */; };
 		6CAD41D51B64356300436298 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAD41D41B64356300436298 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		5F98D1F11B62DC1100FAB688 /* google-news-readerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "google-news-readerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F98D1F51B62DC1100FAB688 /* google_news_readerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = google_news_readerUITests.swift; sourceTree = "<group>"; };
 		5F98D1F71B62DC1100FAB688 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C0797F91B643EBB008C1B35 /* ArticleParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleParser.swift; path = API/ArticleParser.swift; sourceTree = "<group>"; };
 		6CAD41D41B64356300436298 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = API/NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				6CAD41D41B64356300436298 /* NetworkManager.swift */,
+				6C0797F91B643EBB008C1B35 /* ArticleParser.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CAD41D51B64356300436298 /* NetworkManager.swift in Sources */,
+				6C0797FA1B643EBB008C1B35 /* ArticleParser.swift in Sources */,
 				5F98D1D51B62DC1100FAB688 /* ViewController.swift in Sources */,
 				5F98D1D31B62DC1100FAB688 /* AppDelegate.swift in Sources */,
 				5F98D1DB1B62DC1100FAB688 /* google_news_reader.xcdatamodeld in Sources */,
