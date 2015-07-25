@@ -13,6 +13,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
+            if let unwrappedData = data as? NSData {
+                NetworkManager().parseAllArticleData(unwrappedData, completion: { (content, error) -> Void in
+                    print(content)
+                })
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

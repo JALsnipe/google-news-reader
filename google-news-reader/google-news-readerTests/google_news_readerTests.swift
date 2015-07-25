@@ -21,22 +21,27 @@ class google_news_readerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
     func testFetchAllArticles() {
         NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
             XCTAssertNotNil(data)
             XCTAssertNil(error)
+        }
+    }
+    
+    func testParseAllArticleData() {
+        NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
+            XCTAssertNotNil(data)
+            XCTAssertNil(error)
+            
+            guard let parsedData = data as? NSData else {
+                XCTFail()
+                return
+            }
+            
+            NetworkManager().parseAllArticleData(parsedData, completion: { (content, error) -> Void in
+                XCTAssertNotNil(content)
+                XCTAssertNil(error)
+            })
         }
     }
     
