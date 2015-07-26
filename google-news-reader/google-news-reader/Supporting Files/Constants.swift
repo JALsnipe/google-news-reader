@@ -9,3 +9,5 @@
 let kGoogleNewsRSSURL = "http://news.google.com/?output=rss"
 
 let kHTTPResponseStatusCodeSuccess = 200
+
+let kGoogleNewsArticleDateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
