@@ -31,7 +31,7 @@ class NetworkManager: NSObject {
 
     func fetchAllArticlesWithCompletion(completion: (data: AnyObject?, error: ErrorType?) -> Void) {
         
-        let request = NSURLRequest(URL: NSURL(string: "http://news.google.com/?output=rss")!)
+        let request = NSURLRequest(URL: NSURL(string: kGoogleNewsRSSURL)!)
         
         NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
             
@@ -41,7 +41,7 @@ class NetworkManager: NSObject {
             
             if let parsedResponse = response as? NSHTTPURLResponse {
                 
-                if (data != nil) && (error == nil) && (parsedResponse.statusCode == 200) {
+                if (data != nil) && (error == nil) && (parsedResponse.statusCode == kHTTPResponseStatusCodeSuccess) {
                     // good data, no error, good response status code
                     completion(data: data, error: nil)
                 } else {
@@ -49,7 +49,7 @@ class NetworkManager: NSObject {
                         // check error returned first
                         if let errorCode = error?.code {
                             switch errorCode {
-                            case 1009:
+                            case NSURLErrorNotConnectedToInternet:
                                 completion(data: nil, error: NetworkError.NetworkFailure)
                                 
                             default:
