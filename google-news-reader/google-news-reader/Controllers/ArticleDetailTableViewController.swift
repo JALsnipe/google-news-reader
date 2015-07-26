@@ -82,4 +82,20 @@ extension ArticleDetailTableViewController: WKNavigationDelegate {
         spinner.stopAnimating()
         spinner.hidden = true
     }
+    
+    func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
+        print(error)
+        
+        var userMessage: String?
+        
+        switch error.code {
+        case NSURLErrorNotConnectedToInternet:
+            userMessage = NetworkError.NetworkFailure.localizedDescription
+        
+        default:
+            userMessage = NetworkError.UnknownError.localizedDescription
+        }
+        
+        self.alertUserWithTitleAndMessage("Error", message: userMessage)
+    }
 }
