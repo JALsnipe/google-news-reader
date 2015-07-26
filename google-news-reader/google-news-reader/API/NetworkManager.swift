@@ -12,6 +12,19 @@ enum NetworkError: ErrorType {
     case NetworkFailure
     case ParsingError
     case UnknownError
+    
+    var localizedDescription: String {
+        switch self {
+        case .NetworkFailure:
+            return "No Network Connection"
+            
+        case .ParsingError:
+            return "Data Parsing Error"
+            
+        default:
+            return "Unknown Error"
+        }
+    }
 }
 
 class NetworkManager: NSObject {
