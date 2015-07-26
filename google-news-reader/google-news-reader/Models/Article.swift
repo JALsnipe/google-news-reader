@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 import UIKit
 
-@objc(Article)
 class Article: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass

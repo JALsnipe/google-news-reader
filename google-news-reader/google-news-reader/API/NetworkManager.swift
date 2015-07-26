@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum NetworkError: ErrorType {
     case NetworkFailure
@@ -67,6 +68,41 @@ class NetworkManager: NSObject {
         
         articleParser.parseDataWithCompletion { (success) -> Void in
             if success {
+                
+                // try core data
+                var managedArray = [Article]()
+                
+                for articleProto in articleParser.articles {
+                    let managedArticle = Article(prototype: articleProto)
+                    managedArray.append(managedArticle)
+                }
+                
+                // save
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                
+                let managedContext = appDelegate.managedObjectContext
+                
+                do {
+                    try managedContext.save()
+                } catch {
+                    print("Error: \(error)")
+                }
+                
+                // try fetch
+
+                let fetchRequest = NSFetchRequest(entityName:"Article")
+                
+                do {
+                    let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
+                    
+                    print(fetchedResults)
+                } catch {
+                    print("Error: \(error)")
+                }
+                
+                
+                
+                
                 completion(content: articleParser.articles, error: nil)
             } else {
                 completion(content: nil, error: NetworkError.ParsingError)
