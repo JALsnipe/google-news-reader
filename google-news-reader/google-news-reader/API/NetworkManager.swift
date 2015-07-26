@@ -35,10 +35,6 @@ class NetworkManager: NSObject {
         
         NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
             
-            print("data: \(data)")
-            print("response: \(response)")
-            print("error: \(error)")
-            
             if let parsedResponse = response as? NSHTTPURLResponse {
                 
                 if (data != nil) && (error == nil) && (parsedResponse.statusCode == kHTTPResponseStatusCodeSuccess) {
