@@ -65,15 +65,15 @@ class NetworkManager: NSObject {
         }.resume()
     }
     
-    func parseAllArticleData(data: NSData, completion: (content: [String]?, error: NSError?) -> Void) {
+    func parseAllArticleData(data: NSData, completion: (content: [ArticlePrototype]?, error: ErrorType?) -> Void) {
         
         let articleParser = ArticleParser(data: data)
         
         articleParser.parseDataWithCompletion { (success) -> Void in
             if success {
-                completion(content: articleParser.titles, error: nil)
+                completion(content: articleParser.articles, error: nil)
             } else {
-                completion(content: nil, error: nil)
+                completion(content: nil, error: NetworkError.ParsingError)
             }
         }
     }
