@@ -30,6 +30,8 @@ class ArticleDetailTableViewController: UITableViewController {
         let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: webViewHeight))
         webView.loadRequest(NSURLRequest(URL: NSURL(string: (self.article?.articleURL)!)!))
         
+        webView.navigationDelegate = self
+        
         self.tableView.tableFooterView = webView
     }
 
@@ -109,4 +111,15 @@ class ArticleDetailTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension ArticleDetailTableViewController: WKNavigationDelegate {
+    func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation!) {
+        print("didCommitNavigation: \(navigation)")
+    }
+    
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        print("didFinishNavigation: \(navigation)")
+        // stop spinner here
+    }
 }
