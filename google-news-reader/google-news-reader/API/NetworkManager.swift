@@ -70,17 +70,20 @@ class NetworkManager: NSObject {
             if success {
                 
                 // try core data
+                
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                
+                let managedContext = appDelegate.managedObjectContext
+                
                 var managedArray = [Article]()
                 
                 for articleProto in articleParser.articles {
-                    let managedArticle = Article(prototype: articleProto)
+                    let managedArticle = Article(prototype: articleProto, inManagedObjectContext: managedContext)
                     managedArray.append(managedArticle)
                 }
                 
                 // save
-                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 
-                let managedContext = appDelegate.managedObjectContext
                 
                 do {
                     try managedContext.save()
@@ -89,19 +92,18 @@ class NetworkManager: NSObject {
                 }
                 
                 // try fetch
-
-                let fetchRequest = NSFetchRequest(entityName:"Article")
+                // For debugging only
+//                let fetchRequest = NSFetchRequest(entityName:"Article")
+//                
+//                do {
+//                    let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
+//                    
+//                    print(fetchedResults)
+//                } catch {
+//                    print("Error: \(error)")
+//                }
                 
-                do {
-                    let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
-                    
-                    print(fetchedResults)
-                } catch {
-                    print("Error: \(error)")
-                }
-                
-                
-                
+                // TODO: If CoreData save fails, throw error or return articles without caching
                 
                 completion(content: articleParser.articles, error: nil)
             } else {

@@ -14,11 +14,11 @@ class Article: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
     
-    convenience init(prototype: ArticlePrototype) {
+    convenience init(prototype: ArticlePrototype, inManagedObjectContext context: NSManagedObjectContext) {
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        let entity = NSEntityDescription.entityForName("Article", inManagedObjectContext: appDelegate.managedObjectContext)!
+        let entity = NSEntityDescription.entityForName("Article", inManagedObjectContext: context)!
         
         self.init(entity: entity, insertIntoManagedObjectContext: appDelegate.managedObjectContext)
         
