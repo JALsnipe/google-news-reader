@@ -17,7 +17,7 @@ class ArticleListTableViewController: UITableViewController {
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let articlesFetchRequest = NSFetchRequest(entityName: "Article")
-        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
         articlesFetchRequest.sortDescriptors = [sortDescriptor]
         
         let frc = NSFetchedResultsController(fetchRequest: articlesFetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
