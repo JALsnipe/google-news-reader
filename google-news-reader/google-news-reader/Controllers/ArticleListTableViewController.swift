@@ -34,8 +34,16 @@ class ArticleListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // perform an intial fetch to show cached data
+        do {
+            try self.fetchedResultsController.performFetch()
+            
+            self.tableView.reloadData()
+        } catch {
+            print("Error performing initial fetch: \(error)")
+        }
         
-        
+        // Download new articles
         NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
             if let unwrappedData = data as? NSData {
                 NetworkManager().parseAllArticleData(unwrappedData, completion: { (content, error) -> Void in
