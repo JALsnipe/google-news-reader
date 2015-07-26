@@ -17,6 +17,7 @@
 		6C0797FA1B643EBB008C1B35 /* ArticleParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0797F91B643EBB008C1B35 /* ArticleParser.swift */; };
 		6CAD41D51B64356300436298 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAD41D41B64356300436298 /* NetworkManager.swift */; };
 		6CDBDE7B1B64879300D1CBD3 /* ArticleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDBDE7A1B64879300D1CBD3 /* ArticleListTableViewController.swift */; };
+		6CDBDE7E1B648A8200D1CBD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDBDE7D1B648A8200D1CBD3 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		6C0797F91B643EBB008C1B35 /* ArticleParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleParser.swift; path = API/ArticleParser.swift; sourceTree = "<group>"; };
 		6CAD41D41B64356300436298 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = API/NetworkManager.swift; sourceTree = "<group>"; };
 		6CDBDE7A1B64879300D1CBD3 /* ArticleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleListTableViewController.swift; path = Controllers/ArticleListTableViewController.swift; sourceTree = "<group>"; };
+		6CDBDE7D1B648A8200D1CBD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "Supporting Files/Constants.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				5F98D1DE1B62DC1100FAB688 /* LaunchScreen.storyboard */,
 				5F98D1E11B62DC1100FAB688 /* Info.plist */,
 				5F98D1D91B62DC1100FAB688 /* google_news_reader.xcdatamodeld */,
+				6CDBDE7C1B648A6900D1CBD3 /* Supporting Files */,
 			);
 			path = "google-news-reader";
 			sourceTree = "<group>";
@@ -148,6 +151,14 @@
 				6CDBDE7A1B64879300D1CBD3 /* ArticleListTableViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		6CDBDE7C1B648A6900D1CBD3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6CDBDE7D1B648A8200D1CBD3 /* Constants.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,6 +296,7 @@
 				6C0797FA1B643EBB008C1B35 /* ArticleParser.swift in Sources */,
 				5F98D1D31B62DC1100FAB688 /* AppDelegate.swift in Sources */,
 				5F98D1DB1B62DC1100FAB688 /* google_news_reader.xcdatamodeld in Sources */,
+				6CDBDE7E1B648A8200D1CBD3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
