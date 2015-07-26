@@ -10,6 +10,7 @@ import UIKit
 
 extension UIViewController {
     
+    // Takes in title and message strings and presents a UIAletController
     func alertUserWithTitleAndMessage(title: String?, message: String?) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
