@@ -65,15 +65,28 @@ class ArticleListTableViewController: UITableViewController {
 
         // Configure the cell...
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
         
         cell.textLabel?.text = self.articleDataSource[indexPath.row].title
         cell.detailTextLabel?.text = self.articleDataSource[indexPath.row].description
-//        cell.imageView?.image =
+        
+        // download image asyncrounously
+        NetworkManager().fetchImageFromURL(self.articleDataSource[indexPath.row].imageURL) { (image) -> Void in
+            cell.imageView?.image = image
+        }
+        
+        
 
         return cell
     }
     
+    @IBAction func refreshTable(sender: AnyObject) {
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.tableView.reloadData()
+            sender.endRefreshing()
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.

@@ -77,4 +77,17 @@ class NetworkManager: NSObject {
             }
         }
     }
+    
+    func fetchImageFromURL(url: String, completion:(image: UIImage?) -> Void) {
+        let request = NSURLRequest(URL: NSURL(string: url)!)
+        
+        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
+            if data != nil {
+                
+                if let unwrappedData = data as NSData! {
+                    completion(image: UIImage(data: unwrappedData))
+                }
+            }
+        }.resume()
+    }
 }

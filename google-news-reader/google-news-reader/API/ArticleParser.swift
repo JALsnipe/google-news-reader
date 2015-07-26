@@ -41,6 +41,16 @@ class ArticleParser: NSObject {
         completion(success: self.parser.parse())
         
     }
+    
+    func imageWithColor(color: UIColor) -> UIImage {
+        let rect: CGRect = CGRectMake(0, 0, 20, 20)
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(20, 20), false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
 
 // MARK: NSXMLParserDelegate Methods
@@ -140,6 +150,8 @@ extension ArticleParser: NSXMLParserDelegate {
                         // create temporary NSString to use NSRange for substringWithRange
                         let tagStr = imgTag as NSString
                         let imgURL = "http:" + tagStr.substringWithRange(imgMatch.range).stringByReplacingOccurrencesOfString("\"", withString: "")
+                        
+                        // now that we have the image url, fetch the image
                         
                         return imgURL
                     }
