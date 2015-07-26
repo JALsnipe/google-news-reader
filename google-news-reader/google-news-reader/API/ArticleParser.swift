@@ -13,7 +13,7 @@ struct ArticlePrototype {
     var description: String!
     var imageURL: String!
     var image: UIImage?
-    var date: String!
+    var date: NSDate!
     var articleURL: String!
 }
 
@@ -152,7 +152,7 @@ extension ArticleParser: NSXMLParserDelegate {
             break
         }
         
-        // image link is in description
+        // image link is in description HTML
     }
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
@@ -161,10 +161,21 @@ extension ArticleParser: NSXMLParserDelegate {
             if !self.articleTitle.isEmpty && !self.articleDescription.isEmpty {
                 
                 // article prototype constructor
-                let article = ArticlePrototype(title: self.articleTitle, description: self.stringByStrippingHTML(self.articleDescription), imageURL: self.getImageLinkFromImgTag(self.articleDescription), image: nil, date: self.articleDate, articleURL: self.articleURL)
+                let article = ArticlePrototype(title: self.articleTitle, description: self.stringByStrippingHTML(self.articleDescription), imageURL: self.getImageLinkFromImgTag(self.articleDescription), image: nil, date: self.dateFromString(self.articleDate), articleURL: self.articleURL)
                 
                 self.articles.append(article)
             }
         }
+    }
+    
+    func dateFromString(input: String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
+        
+        if let date = dateFormatter.dateFromString(input) {
+            return date
+        }
+        
+        return NSDate()
     }
 }

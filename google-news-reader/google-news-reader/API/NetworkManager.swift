@@ -67,6 +67,10 @@ class NetworkManager: NSObject {
         
         articleParser.parseDataWithCompletion { (success) -> Void in
             if success {
+                
+                // try core data
+                CoreDataManager().cacheFetchedArticles(articleParser.articles)
+                
                 completion(content: articleParser.articles, error: nil)
             } else {
                 completion(content: nil, error: NetworkError.ParsingError)
