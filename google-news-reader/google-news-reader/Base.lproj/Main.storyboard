@@ -28,7 +28,7 @@
                             <outlet property="delegate" destination="zLX-wl-yDe" id="YSJ-rT-wRy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="KLq-Tf-bnj" userLabel="Google News Reader"/>
+                    <navigationItem key="navigationItem" title="Google News Feed" id="KLq-Tf-bnj" userLabel="Google News Reader"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bUu-Gx-yJS">
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
@@ -43,16 +43,16 @@
             </objects>
             <point key="canvasLocation" x="715" y="253"/>
         </scene>
-        <!--Article Detail Table View Controller-->
+        <!--Article Detail-->
         <scene sceneID="Mkx-ob-pW2">
             <objects>
-                <tableViewController id="MPO-hk-rVb" customClass="ArticleDetailTableViewController" customModule="google_news_reader" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qmh-Ri-lhB">
+                <tableViewController title="Article Detail" id="MPO-hk-rVb" customClass="ArticleDetailTableViewController" customModule="google_news_reader" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qmh-Ri-lhB">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleHeader" rowHeight="88" id="uaz-O4-7Dg" customClass="ArticleHeaderTableViewCell" customModule="google_news_reader" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleHeader" rowHeight="88" id="uaz-O4-7Dg" customClass="ArticleHeaderTableViewCell" customModule="google_news_reader" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="86" width="600" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uaz-O4-7Dg" id="1u3-4L-Kif">

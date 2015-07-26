@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class ArticleDetailTableViewController: UITableViewController {
     
@@ -23,6 +24,13 @@ class ArticleDetailTableViewController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 88.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        let webViewHeight = self.tableView.frame.size.height - self.tableView.estimatedRowHeight - (self.navigationController?.navigationBar.frame.size.height)! - UIApplication.sharedApplication().statusBarFrame.height
+        
+        let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: webViewHeight))
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: (self.article?.articleURL)!)!))
+        
+        self.tableView.tableFooterView = webView
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,10 +63,6 @@ class ArticleDetailTableViewController: UITableViewController {
 
         return cell
     }
-    
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return 88.0
-//    }
 
     /*
     // Override to support conditional editing of the table view.
