@@ -29,6 +29,8 @@ enum NetworkError: ErrorType {
 
 class NetworkManager: NSObject {
 
+    // The intital entry point for fetching articles
+    // This method takes make a network request to the Google News RSS feed and returns an NSData object and/or a custom NetworkError ErrorType object I have defined above
     func fetchAllArticlesWithCompletion(completion: (data: AnyObject?, error: ErrorType?) -> Void) {
         
         let request = NSURLRequest(URL: NSURL(string: kGoogleNewsRSSURL)!)
@@ -61,6 +63,8 @@ class NetworkManager: NSObject {
         }.resume()
     }
     
+    // This method takes in an NSData object and runs it through my parser class to parse the XML
+    // It returns an array of ArticlePrototype structs (the prototype object used to create my Article NSManagedObject, and/or a ParsingError
     func parseAllArticleData(data: NSData, completion: (content: [ArticlePrototype]?, error: ErrorType?) -> Void) {
         
         let articleParser = ArticleParser(data: data)
@@ -78,6 +82,7 @@ class NetworkManager: NSObject {
         }
     }
     
+    // This method takes in an array of ArticlePrototype objects, fetches the image for each object, and retuns are new array of ArticlePrototype objects with image properties
     func downloadImagesForArticles(articles: [ArticlePrototype], completion: (articles: [ArticlePrototype]) -> Void) {
         
         var articlesWithImages = [ArticlePrototype]()
@@ -100,6 +105,8 @@ class NetworkManager: NSObject {
         }
     }
     
+    // This method is used internally by downloadImagesForArticles
+    // It performs the web request to fetch the data associated with an image URL, and return a UIIimage
     func fetchImageFromURL(url: String, completion:(image: UIImage?) -> Void) {
         let request = NSURLRequest(URL: NSURL(string: url)!)
         

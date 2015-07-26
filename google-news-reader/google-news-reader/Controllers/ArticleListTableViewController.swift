@@ -16,8 +16,7 @@ class ArticleListTableViewController: UITableViewController {
     // Set up an NSFetchedResultsController to fetch articles by date published
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let articlesFetchRequest = NSFetchRequest(entityName: "Article")
-        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
-        articlesFetchRequest.sortDescriptors = [sortDescriptor]
+        articlesFetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         
         let frc = NSFetchedResultsController(fetchRequest: articlesFetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
         
@@ -26,14 +25,8 @@ class ArticleListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        // perform an intial fetch to show cached data
+        // Perform an intial fetch of Article objects from Core Data to show cached data, if any
         do {
             try self.fetchedResultsController.performFetch()
             
@@ -53,7 +46,7 @@ class ArticleListTableViewController: UITableViewController {
                 NetworkManager().parseAllArticleData(unwrappedData, completion: { (content, error) -> Void in
                     
                     if error == nil {
-                        // hop back on the main thread to reload, since we're in an async callback
+                        // Hop back on the main thread to reload, since we're in an async callback
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             
                             do {
@@ -77,6 +70,16 @@ class ArticleListTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func refreshTable(sender: AnyObject) {
+        
+        // TODO: FIXME, refresh article content rather than just table view
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.tableView.reloadData()
+            sender.endRefreshing()
+        }
     }
 
     // MARK: - Table view data source
@@ -119,21 +122,14 @@ class ArticleListTableViewController: UITableViewController {
         self.performSegueWithIdentifier("showArticleDetail", sender: indexPath)
     }
     
-    @IBAction func refreshTable(sender: AnyObject) {
-        
-        // TODO: FIXME, refresh article content rather than just table view
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.tableView.reloadData()
-            sender.endRefreshing()
-        }
-    }
-    
     // MARK: Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Check if the destination view controller is the detail controller
         if let detailVC = segue.destinationViewController as? ArticleDetailTableViewController {
+            // The sender should only be an indexPath, so unwrap it
             if let indexPath = sender as? NSIndexPath {
+                // Find the Article from the indexPath.row specified and pass it to our destination view controller
                 if let dataSource = self.fetchedResultsController.fetchedObjects as? [Article] {
                     detailVC.article = dataSource[indexPath.row]
                 }

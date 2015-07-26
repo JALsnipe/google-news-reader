@@ -8,6 +8,8 @@
 
 import UIKit
 
+// This is my Article prototype object
+// It is used to create a tempoary article object before saving an NSManagedObject to Core Data
 struct ArticlePrototype {
     var title: String!
     var description: String!
@@ -19,9 +21,10 @@ struct ArticlePrototype {
 
 class ArticleParser: NSObject {
     
-    var data: NSData!
     var parser: NSXMLParser!
     
+    // These are class variables used by the parser
+    // They hold information that will create an ArticleProtoptye object
     var element = ""
     var articles = [ArticlePrototype]()
     var articleTitle = ""
@@ -30,14 +33,16 @@ class ArticleParser: NSObject {
     var articleDate = ""
     var articleURL = ""
     
+    // This custom init allows us to initialize my parser class with data returned from the fetchAllArticlesWithCompletion network call
     convenience init (data: NSData) {
         self.init()
         
-        self.data = data
         self.parser = NSXMLParser(data: data)
         self.parser.delegate = self
     }
     
+    // This method allows the NetworkManager class to inerface with the XML parser used by this parsing class, without accessing it directly
+    // On sucessful parsing, it also invokes the image downloading method
     func parseDataWithCompletion(completion: (success: Bool) -> Void) {
         
         if self.parser.parse() {
@@ -55,8 +60,9 @@ class ArticleParser: NSObject {
     }
     
     // MARK: Parsing Helper Methods
+    // These are methods used to help me with parsing HTML or any of the properties associated with an Article
     
-    // Strips the HTML tags (<>) from an input string
+    // This method strips the HTML tags (<>) from an input string
     func stringByStrippingHTML(input: String) -> String {
         
         let stringlength = input.characters.count
@@ -74,13 +80,13 @@ class ArticleParser: NSObject {
         return newString
     }
     
-    // Takes in an <img> tag and returns the URL of the image
+    // This method takes in an <img> tag and returns the URL of the image
     func getImageLinkFromImgTag(input:String) -> String {
         
         // First, get the entire <img> tag containing the image URL
         
         do {
-            let regex = try NSRegularExpression(pattern: "<img src=[^>]+>", options: NSRegularExpressionOptions.CaseInsensitive)
+            let regex = try NSRegularExpression(pattern: kImgTagRegEx, options: NSRegularExpressionOptions.CaseInsensitive)
             
             let results = regex.matchesInString(input, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, input.characters.count))
             
@@ -93,7 +99,7 @@ class ArticleParser: NSObject {
                 
                 do {
                     // find our url, it is encapsolated like "//[url]"
-                    let imgRegex = try NSRegularExpression(pattern: "\"//(.*?)\"", options: NSRegularExpressionOptions.CaseInsensitive)
+                    let imgRegex = try NSRegularExpression(pattern: kImgTagUrlRegEx, options: NSRegularExpressionOptions.CaseInsensitive)
                     
                     let imgResults = imgRegex.matchesInString(imgTag, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, imgTag.characters.count))
                     
@@ -134,12 +140,14 @@ class ArticleParser: NSObject {
 
 extension ArticleParser: NSXMLParserDelegate {
     
+    // I use class variables to hold information about an Article
+    // When the parser moves to the next item, I clear out the class variables so they may be used again
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
         self.element = elementName
         
         if self.element == "item" {
-            // next element, clear class property containers
+            // next element, clear class variable property containers
             self.articleTitle = ""
             self.articleDescription = ""
             self.articleImageURL = ""
@@ -147,7 +155,7 @@ extension ArticleParser: NSXMLParserDelegate {
             self.articleURL = ""
         }
     }
-    
+    // When the parser finds characters associated with an element I want to store, I capture the characters found in a class variable
     func parser(parser: NSXMLParser, foundCharacters string: String) {
         
         switch self.element {
@@ -170,6 +178,8 @@ extension ArticleParser: NSXMLParserDelegate {
         // image link is in description HTML string
     }
     
+    // Once an item has been completely parsed, I take the information stored in the class variables and construct an ArticlePrototype object with their content
+    // I then add each ArticlePrototype object to an array to be returned by the class
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
         if elementName == "item" {
