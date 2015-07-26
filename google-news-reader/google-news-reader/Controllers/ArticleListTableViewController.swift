@@ -46,7 +46,7 @@ class ArticleListTableViewController: UITableViewController {
                             
                             // hop back on the main thread to reload, since we're in an async callback
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.tableView.reloadData()
+//                                self.tableView.reloadData()
                                 
                                 do {
                                     try self.fetchedResultsController.performFetch()
