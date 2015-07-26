@@ -24,8 +24,6 @@ class ArticleListTableViewController: UITableViewController {
         NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
             if let unwrappedData = data as? NSData {
                 NetworkManager().parseAllArticleData(unwrappedData, completion: { (content, error) -> Void in
-                    print(content)
-                    print(error)
                     
                     if error == nil {
                         if let unwrappedContent = content as [ArticlePrototype]! {
@@ -61,19 +59,36 @@ class ArticleListTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        // TODO: FIXME, custom cells
 //        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
         // Configure the cell...
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
         
         cell.textLabel?.text = self.articleDataSource[indexPath.row].title
         cell.detailTextLabel?.text = self.articleDataSource[indexPath.row].description
-//        cell.imageView?.image =
+        
+        if let cellImage = self.articleDataSource[indexPath.row].image as UIImage! {
+            cell.imageView?.image = cellImage
+        } else {
+            // TODO: FIXME, add placeholder image
+        }
+        
 
         return cell
     }
     
+    @IBAction func refreshTable(sender: AnyObject) {
+        
+        // TODO: FixMe, refresh article content rather than just table view
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.tableView.reloadData()
+            sender.endRefreshing()
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.

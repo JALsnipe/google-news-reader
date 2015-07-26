@@ -12,6 +12,7 @@ struct ArticlePrototype {
     var title: String!
     var description: String!
     var imageURL: String!
+    var image: UIImage?
     var date: String!
     var articleURL: String!
 }
@@ -38,8 +39,79 @@ class ArticleParser: NSObject {
     }
     
     func parseDataWithCompletion(completion: (success: Bool) -> Void) {
-        completion(success: self.parser.parse())
         
+        if self.parser.parse() {
+            // parsing sucessful, now download images
+            
+            NetworkManager().downloadImagesForArticles(self.articles, completion: { (articlesWithImages) -> Void in
+                self.articles = articlesWithImages
+                completion(success: true)
+            })
+        } else {
+            // there was an error parsing
+            completion(success: false)
+        }
+        
+    }
+    
+    // MARK: HTML Parsing Helper Methods
+    
+    func stringByStrippingHTML(input: String) -> String {
+        
+        let stringlength = input.characters.count
+        var newString = ""
+        
+        do {
+            let regex = try NSRegularExpression(pattern: "<[^>]+>", options: NSRegularExpressionOptions.CaseInsensitive)
+            
+            newString = regex.stringByReplacingMatchesInString(input, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, stringlength), withTemplate: "")
+            
+        } catch {
+            print("Error stripping HTML from input string: \(error)")
+        }
+        
+        return newString
+    }
+    
+    func getImageLinkFromImgTag(input:String) -> String {
+        
+        // First, get the entire <img> tag containing the image URL
+        
+        do {
+            let regex = try NSRegularExpression(pattern: "<img src=[^>]+>", options: NSRegularExpressionOptions.CaseInsensitive)
+            
+            let results = regex.matchesInString(input, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, input.characters.count))
+            
+            if let match = results.first as NSTextCheckingResult! {
+                // create temporary NSString to use NSRange for substringWithRange
+                let str = input as NSString
+                let imgTag = str.substringWithRange(match.range)
+                
+                // we have the image tag, we need to extract the image URL
+                
+                do {
+                    // find our url, it is encapsolated like "//[url]"
+                    let imgRegex = try NSRegularExpression(pattern: "\"//(.*?)\"", options: NSRegularExpressionOptions.CaseInsensitive)
+                    
+                    let imgResults = imgRegex.matchesInString(imgTag, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, imgTag.characters.count))
+                    
+                    if let imgMatch = imgResults.first as NSTextCheckingResult! {
+                        // create temporary NSString to use NSRange for substringWithRange
+                        let tagStr = imgTag as NSString
+                        let imgURL = "http:" + tagStr.substringWithRange(imgMatch.range).stringByReplacingOccurrencesOfString("\"", withString: "")
+                        
+                        return imgURL
+                    }
+                    
+                } catch {
+                    print("Error parsing URL from <img> tag: \(error)")
+                }
+            }
+        } catch {
+            print("Error parsing <img> tag: \(error)")
+        }
+        
+        return ""
     }
 }
 
@@ -88,70 +160,11 @@ extension ArticleParser: NSXMLParserDelegate {
         if elementName == "item" {
             if !self.articleTitle.isEmpty && !self.articleDescription.isEmpty {
                 
-                let article = ArticlePrototype(title: self.articleTitle, description: self.stringByStrippingHTML(self.articleDescription), imageURL: self.getImageFromString(self.articleDescription), date: self.articleDate, articleURL: self.articleURL)
+                // article prototype constructor
+                let article = ArticlePrototype(title: self.articleTitle, description: self.stringByStrippingHTML(self.articleDescription), imageURL: self.getImageLinkFromImgTag(self.articleDescription), image: nil, date: self.articleDate, articleURL: self.articleURL)
                 
                 self.articles.append(article)
-                print(self.articleTitle)
             }
         }
-    }
-    
-    func stringByStrippingHTML(input: String) -> String {
-        
-        let stringlength = input.characters.count
-        var newString = ""
-        
-        do {
-            let regex = try NSRegularExpression(pattern: "<[^>]+>", options: NSRegularExpressionOptions.CaseInsensitive)
-            
-            newString = regex.stringByReplacingMatchesInString(input, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, stringlength), withTemplate: "")
-            
-            print(newString)
-        } catch {
-            print(error)
-        }
-        
-        return newString
-    }
-    
-    func getImageFromString(input:String) -> String {
-        
-        // First, get the entire <img> tag containing the image URL
-        
-        do {
-            let regex = try NSRegularExpression(pattern: "<img src=[^>]+>", options: NSRegularExpressionOptions.CaseInsensitive)
-            
-            let results = regex.matchesInString(input, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, input.characters.count))
-            
-            if let match = results.first as NSTextCheckingResult! {
-                // create temporary NSString to use NSRange for substringWithRange
-                let str = input as NSString
-                let imgTag = str.substringWithRange(match.range)
-                
-                // we have the image tag, we need to extract the image URL
-                
-                do {
-                    // find our url, it is encapsolated like "//[url]"
-                    let imgRegex = try NSRegularExpression(pattern: "\"//(.*?)\"", options: NSRegularExpressionOptions.CaseInsensitive)
-                    
-                    let imgResults = imgRegex.matchesInString(imgTag, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, imgTag.characters.count))
-                    
-                    if let imgMatch = imgResults.first as NSTextCheckingResult! {
-                        // create temporary NSString to use NSRange for substringWithRange
-                        let tagStr = imgTag as NSString
-                        let imgURL = "http:" + tagStr.substringWithRange(imgMatch.range).stringByReplacingOccurrencesOfString("\"", withString: "")
-                        
-                        return imgURL
-                    }
-                    
-                } catch {
-                    print("Error parsing URL from <img> tag: \(error)")
-                }
-            }
-        } catch {
-            print("Error parsing <img> tag: \(error)")
-        }
-        
-        return ""
     }
 }
