@@ -12,6 +12,7 @@ struct ArticlePrototype {
     var title: String!
     var description: String!
     var imageURL: String!
+    var image: UIImage?
     var date: String!
     var articleURL: String!
 }
@@ -38,18 +39,19 @@ class ArticleParser: NSObject {
     }
     
     func parseDataWithCompletion(completion: (success: Bool) -> Void) {
-        completion(success: self.parser.parse())
         
-    }
-    
-    func imageWithColor(color: UIColor) -> UIImage {
-        let rect: CGRect = CGRectMake(0, 0, 20, 20)
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(20, 20), false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
+        if self.parser.parse() {
+            // parsing sucessful, now download images
+            
+            NetworkManager().downloadImagesForArticles(self.articles, completion: { (articlesWithImages) -> Void in
+                self.articles = articlesWithImages
+                completion(success: true)
+            })
+        } else {
+            // there was an error parsing
+            completion(success: false)
+        }
+        
     }
 }
 
@@ -98,10 +100,9 @@ extension ArticleParser: NSXMLParserDelegate {
         if elementName == "item" {
             if !self.articleTitle.isEmpty && !self.articleDescription.isEmpty {
                 
-                let article = ArticlePrototype(title: self.articleTitle, description: self.stringByStrippingHTML(self.articleDescription), imageURL: self.getImageFromString(self.articleDescription), date: self.articleDate, articleURL: self.articleURL)
+                let article = ArticlePrototype(title: self.articleTitle, description: self.stringByStrippingHTML(self.articleDescription), imageURL: self.getImageFromString(self.articleDescription), image: nil, date: self.articleDate, articleURL: self.articleURL)
                 
                 self.articles.append(article)
-                print(self.articleTitle)
             }
         }
     }
@@ -150,8 +151,6 @@ extension ArticleParser: NSXMLParserDelegate {
                         // create temporary NSString to use NSRange for substringWithRange
                         let tagStr = imgTag as NSString
                         let imgURL = "http:" + tagStr.substringWithRange(imgMatch.range).stringByReplacingOccurrencesOfString("\"", withString: "")
-                        
-                        // now that we have the image url, fetch the image
                         
                         return imgURL
                     }

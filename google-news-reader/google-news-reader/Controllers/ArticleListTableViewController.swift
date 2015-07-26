@@ -70,11 +70,9 @@ class ArticleListTableViewController: UITableViewController {
         cell.textLabel?.text = self.articleDataSource[indexPath.row].title
         cell.detailTextLabel?.text = self.articleDataSource[indexPath.row].description
         
-        // download image asyncrounously
-        NetworkManager().fetchImageFromURL(self.articleDataSource[indexPath.row].imageURL) { (image) -> Void in
-            cell.imageView?.image = image
+        if let cellImage = self.articleDataSource[indexPath.row].image as UIImage! {
+            cell.imageView?.image = cellImage
         }
-        
         
 
         return cell

@@ -78,6 +78,28 @@ class NetworkManager: NSObject {
         }
     }
     
+    func downloadImagesForArticles(articles: [ArticlePrototype], completion: (articles: [ArticlePrototype]) -> Void) {
+        
+        var articlesWithImages = [ArticlePrototype]()
+        
+        var index = 0
+        
+        for var article in articles {
+            self.fetchImageFromURL(article.imageURL, completion: { (image) -> Void in
+                article.image = image
+                
+                articlesWithImages.append(article)
+                
+                index++;
+                
+                if index == articles.count {
+                    completion(articles: articlesWithImages)
+                }
+                
+            })
+        }
+    }
+    
     func fetchImageFromURL(url: String, completion:(image: UIImage?) -> Void) {
         let request = NSURLRequest(URL: NSURL(string: url)!)
         
