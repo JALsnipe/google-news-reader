@@ -22,8 +22,6 @@ class ArticleListTableViewController: UITableViewController {
         
         let frc = NSFetchedResultsController(fetchRequest: articlesFetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
         
-        frc.delegate = self
-        
         return frc
         }()
 
@@ -173,35 +171,4 @@ class ArticleListTableViewController: UITableViewController {
     }
     */
 
-}
-
-extension ArticleListTableViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.endUpdates()
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: NSManagedObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        
-        if let unwrappedIndexPath = indexPath as NSIndexPath!, unwrappedNewIndexPath = newIndexPath as NSIndexPath! {
-            
-            switch type {
-            case NSFetchedResultsChangeType.Insert:
-                self.tableView.insertRowsAtIndexPaths([unwrappedNewIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-                
-            case NSFetchedResultsChangeType.Move:
-                self.tableView.moveRowAtIndexPath(unwrappedNewIndexPath, toIndexPath: unwrappedNewIndexPath)
-                
-            case NSFetchedResultsChangeType.Delete:
-                self.tableView.deleteRowsAtIndexPaths([unwrappedIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-                
-            case NSFetchedResultsChangeType.Update:
-                self.tableView.reloadRowsAtIndexPaths([unwrappedIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            }
-        }
-    }
 }
