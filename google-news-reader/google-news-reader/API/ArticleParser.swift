@@ -54,8 +54,9 @@ class ArticleParser: NSObject {
         
     }
     
-    // MARK: HTML Parsing Helper Methods
+    // MARK: Parsing Helper Methods
     
+    // Strips the HTML tags (<>) from an input string
     func stringByStrippingHTML(input: String) -> String {
         
         let stringlength = input.characters.count
@@ -73,6 +74,7 @@ class ArticleParser: NSObject {
         return newString
     }
     
+    // Takes in an <img> tag and returns the URL of the image
     func getImageLinkFromImgTag(input:String) -> String {
         
         // First, get the entire <img> tag containing the image URL
@@ -87,7 +89,7 @@ class ArticleParser: NSObject {
                 let str = input as NSString
                 let imgTag = str.substringWithRange(match.range)
                 
-                // we have the image tag, we need to extract the image URL
+                // we have the image tag, now we need to extract the image URL
                 
                 do {
                     // find our url, it is encapsolated like "//[url]"
@@ -113,6 +115,19 @@ class ArticleParser: NSObject {
         
         return ""
     }
+    
+    // Takes in a Article date string and returns an NSDate object
+    // If the date cannot be parsed, returns the current date
+    func dateFromString(input: String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = kGoogleNewsArticleDateFormat
+        
+        if let date = dateFormatter.dateFromString(input) {
+            return date
+        }
+        
+        return NSDate()
+    }
 }
 
 // MARK: NSXMLParserDelegate Methods
@@ -124,7 +139,7 @@ extension ArticleParser: NSXMLParserDelegate {
         self.element = elementName
         
         if self.element == "item" {
-            // next element, clear properties
+            // next element, clear class property containers
             self.articleTitle = ""
             self.articleDescription = ""
             self.articleImageURL = ""
@@ -152,7 +167,7 @@ extension ArticleParser: NSXMLParserDelegate {
             break
         }
         
-        // image link is in description HTML
+        // image link is in description HTML string
     }
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
@@ -166,16 +181,5 @@ extension ArticleParser: NSXMLParserDelegate {
                 self.articles.append(article)
             }
         }
-    }
-    
-    func dateFromString(input: String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
-        
-        if let date = dateFormatter.dateFromString(input) {
-            return date
-        }
-        
-        return NSDate()
     }
 }
