@@ -7,10 +7,25 @@
 //
 
 import UIKit
+import CoreData
 
 class ArticleListTableViewController: UITableViewController {
     
     var articleDataSource = [ArticlePrototype]()
+    
+    var context: NSManagedObjectContext!
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        let articlesFetchRequest = NSFetchRequest(entityName: "Article")
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        articlesFetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let frc = NSFetchedResultsController(fetchRequest: articlesFetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        frc.delegate = self
+        
+        return frc
+        }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +35,8 @@ class ArticleListTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        
         
         NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
             if let unwrappedData = data as? NSData {
@@ -32,6 +49,15 @@ class ArticleListTableViewController: UITableViewController {
                             // hop back on the main thread to reload, since we're in an async callback
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 self.tableView.reloadData()
+                                
+                                do {
+                                    try self.fetchedResultsController.performFetch()
+                                    
+                                    print("fetch")
+                                    self.tableView.reloadData()
+                                } catch {
+                                    print("Error: \(error)")
+                                }
                             })
                             
                         }
@@ -54,7 +80,17 @@ class ArticleListTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.articleDataSource.count
+        
+//        if let sections = fetchedResultsController.sections {
+//            let currentSection = sections[section] as NSFetchedResultsSectionInfo
+//            return currentSection.numberOfObjects
+//        }
+        
+        if let results = self.fetchedResultsController.fetchedObjects?.count {
+            return results
+        }
+        
+        return 0
     }
 
     
@@ -67,14 +103,16 @@ class ArticleListTableViewController: UITableViewController {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
         
-        cell.textLabel?.text = self.articleDataSource[indexPath.row].title
-        cell.detailTextLabel?.text = self.articleDataSource[indexPath.row].description
-        
-        if let cellImage = self.articleDataSource[indexPath.row].image as UIImage! {
-            cell.imageView?.image = cellImage
-        } else {
-            // TODO: FIXME, add placeholder image
+        if let dataSource = self.fetchedResultsController.fetchedObjects as? [Article] {
+            cell.textLabel?.text = dataSource[indexPath.row].title
+            cell.detailTextLabel?.text = dataSource[indexPath.row].description
+            
+            if let cellImage: UIImage = dataSource[indexPath.row].image as? UIImage {
+                cell.imageView?.image = cellImage
+            }
         }
+        
+        
         
 
         return cell
@@ -135,4 +173,35 @@ class ArticleListTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension ArticleListTableViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.endUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: NSManagedObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        if let unwrappedIndexPath = indexPath as NSIndexPath!, unwrappedNewIndexPath = newIndexPath as NSIndexPath! {
+            
+            switch type {
+            case NSFetchedResultsChangeType.Insert:
+                self.tableView.insertRowsAtIndexPaths([unwrappedNewIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                
+            case NSFetchedResultsChangeType.Move:
+                self.tableView.moveRowAtIndexPath(unwrappedNewIndexPath, toIndexPath: unwrappedNewIndexPath)
+                
+            case NSFetchedResultsChangeType.Delete:
+                self.tableView.deleteRowsAtIndexPaths([unwrappedIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                
+            case NSFetchedResultsChangeType.Update:
+                self.tableView.reloadRowsAtIndexPaths([unwrappedIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
+        }
+    }
 }
