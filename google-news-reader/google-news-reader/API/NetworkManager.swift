@@ -85,6 +85,10 @@ class NetworkManager: NSObject {
     // This method takes in an array of ArticlePrototype objects, fetches the image for each object, and retuns are new array of ArticlePrototype objects with image properties
     func downloadImagesForArticles(articles: [ArticlePrototype], completion: (articles: [ArticlePrototype]) -> Void) {
         
+        if articles.isEmpty {
+            completion(articles: articles)
+        }
+        
         var articlesWithImages = [ArticlePrototype]()
         
         var index = 0
@@ -116,6 +120,8 @@ class NetworkManager: NSObject {
                 if let unwrappedData = data as NSData! {
                     completion(image: UIImage(data: unwrappedData))
                 }
+            } else {
+                completion(image: nil)
             }
         }.resume()
     }
