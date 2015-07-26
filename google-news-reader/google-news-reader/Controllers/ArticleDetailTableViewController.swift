@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import WebKit
 
 class ArticleDetailTableViewController: UITableViewController {
     
     var article: Article?
+    let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,22 @@ class ArticleDetailTableViewController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 88.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        let webViewHeight = self.tableView.frame.size.height - self.tableView.estimatedRowHeight - (self.navigationController?.navigationBar.frame.size.height)! - UIApplication.sharedApplication().statusBarFrame.height
+        
+        let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: webViewHeight))
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: (self.article?.articleURL)!)!))
+        
+        webView.navigationDelegate = self
+        
+        self.tableView.tableFooterView = webView
+        
+        // set up activity indicator for web view loading
+        self.spinner.center = self.view.center
+        self.spinner.color = UIColor.purpleColor()
+        self.view.addSubview(self.spinner)
+        self.view.bringSubviewToFront(self.spinner)
+        self.spinner.startAnimating()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +63,6 @@ class ArticleDetailTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.articleTitleLabel.text = self.article?.title
-//        cell.articleDateLabel.text = ""
         
         if let imageObj = self.article?.image {
             if let image: UIImage = imageObj as? UIImage {
@@ -55,54 +72,30 @@ class ArticleDetailTableViewController: UITableViewController {
 
         return cell
     }
+
+}
+
+extension ArticleDetailTableViewController: WKNavigationDelegate {
     
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return 88.0
-//    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        // stop spinner
+        spinner.stopAnimating()
+        spinner.hidden = true
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
+        print(error)
+        
+        var userMessage: String?
+        
+        switch error.code {
+        case NSURLErrorNotConnectedToInternet:
+            userMessage = NetworkError.NetworkFailure.localizedDescription
+        
+        default:
+            userMessage = NetworkError.UnknownError.localizedDescription
+        }
+        
+        self.alertUserWithTitleAndMessage("Error", message: userMessage)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
