@@ -24,14 +24,17 @@ class google_news_readerTests: XCTestCase {
     func testFetchAllArticles() {
         NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
             XCTAssertNotNil(data)
-            XCTAssertNil(error)
+            
+            if error != nil {
+                XCTFail("fetchAllArticles should not return an error")
+            }
+            
         }
     }
     
     func testParseAllArticleData() {
         NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
             XCTAssertNotNil(data)
-            XCTAssertNil(error)
             
             guard let parsedData = data as? NSData else {
                 XCTFail()
@@ -39,9 +42,25 @@ class google_news_readerTests: XCTestCase {
             }
             
             NetworkManager().parseAllArticleData(parsedData, completion: { (content, error) -> Void in
-                XCTAssertNotNil(content)
-                XCTAssertNil(error)
+                
+                if error != nil {
+                    XCTFail("parsing article data failed")
+                }
+                
+                if let unwrappedContent = content as [ArticlePrototype]! {
+                    if unwrappedContent.isEmpty {
+                        XCTFail("parseAllArticleData should return a non-empty array of Article Prototypes")
+                    }
+                }
             })
+        }
+    }
+    
+    func testParsingWithBadData() {
+        NetworkManager().parseAllArticleData(NSData()) { (content, error) -> Void in
+            if error == nil {
+                XCTFail("parseAllArticleData should fail with bad data")
+            }
         }
     }
     
