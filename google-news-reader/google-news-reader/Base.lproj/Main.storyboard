@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Google News Reader-->
         <scene sceneID="tp8-Rd-5rH">
             <objects>
-                <tableViewController id="zLX-wl-yDe" customClass="ArticleListTableViewController" customModule="google_news_reader" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="zLX-wl-yDe" userLabel="Google News Reader" customClass="ArticleListTableViewController" customModule="google_news_reader" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="adg-9L-rB3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,17 +28,78 @@
                             <outlet property="delegate" destination="zLX-wl-yDe" id="YSJ-rT-wRy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="KLq-Tf-bnj"/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="KLq-Tf-bnj" userLabel="Google News Reader"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bUu-Gx-yJS">
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
                             <action selector="refreshTable:" destination="zLX-wl-yDe" eventType="valueChanged" id="FbN-s9-Odf"/>
                         </connections>
                     </refreshControl>
+                    <connections>
+                        <segue destination="MPO-hk-rVb" kind="show" identifier="showArticleDetail" id="Hrc-gC-Tgl"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjJ-xl-Mgf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="715" y="253"/>
+        </scene>
+        <!--Article Detail Table View Controller-->
+        <scene sceneID="Mkx-ob-pW2">
+            <objects>
+                <tableViewController id="MPO-hk-rVb" customClass="ArticleDetailTableViewController" customModule="google_news_reader" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qmh-Ri-lhB">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleHeader" rowHeight="88" id="uaz-O4-7Dg" customClass="ArticleHeaderTableViewCell" customModule="google_news_reader" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="86" width="600" height="88"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uaz-O4-7Dg" id="1u3-4L-Kif">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FmF-ak-7gJ">
+                                            <rect key="frame" x="8" y="4" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="2oJ-OG-cSB"/>
+                                                <constraint firstAttribute="width" constant="80" id="z7r-Ib-2xK"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lindsey Graham: Donald Trump 'Selling Fear and Prejudice' - ABC News" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAV-tu-sy7">
+                                            <rect key="frame" x="96" y="0.0" width="496" height="79.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="79.5" id="mLx-BP-1Vs"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="FmF-ak-7gJ" secondAttribute="bottom" constant="3.5" id="9xI-Md-Ki3"/>
+                                        <constraint firstAttribute="trailing" secondItem="dAV-tu-sy7" secondAttribute="trailing" constant="8" id="BJa-Ye-1P0"/>
+                                        <constraint firstItem="FmF-ak-7gJ" firstAttribute="top" secondItem="1u3-4L-Kif" secondAttribute="top" constant="4" id="XsD-Dl-Qz4"/>
+                                        <constraint firstItem="dAV-tu-sy7" firstAttribute="top" secondItem="1u3-4L-Kif" secondAttribute="top" id="f92-Jz-D46"/>
+                                        <constraint firstItem="FmF-ak-7gJ" firstAttribute="leading" secondItem="1u3-4L-Kif" secondAttribute="leading" constant="8" id="pLD-fl-0Ls"/>
+                                        <constraint firstItem="dAV-tu-sy7" firstAttribute="leading" secondItem="FmF-ak-7gJ" secondAttribute="trailing" constant="8" id="uyr-sd-zlu"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="articleImageView" destination="FmF-ak-7gJ" id="bgq-0p-xcS"/>
+                                    <outlet property="articleTitleLabel" destination="dAV-tu-sy7" id="EWH-js-67g"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="MPO-hk-rVb" id="ljH-je-2Mn"/>
+                            <outlet property="delegate" destination="MPO-hk-rVb" id="p8C-Wt-BYm"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dWi-jg-0JK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1465" y="253"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="D73-kR-Gjm">

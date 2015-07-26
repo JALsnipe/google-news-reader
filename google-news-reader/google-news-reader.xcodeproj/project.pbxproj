@@ -19,6 +19,8 @@
 		6CB0B37F1B65396D00FC969C /* Article+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB0B37D1B65396D00FC969C /* Article+CoreDataProperties.swift */; };
 		6CB0B3801B65396D00FC969C /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB0B37E1B65396D00FC969C /* Article.swift */; };
 		6CB0B3821B654D6900FC969C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB0B3811B654D6900FC969C /* CoreDataManager.swift */; };
+		6CB0B3861B6576F300FC969C /* ArticleDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB0B3851B6576F300FC969C /* ArticleDetailTableViewController.swift */; };
+		6CB0B3891B65790800FC969C /* ArticleHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB0B3881B65790800FC969C /* ArticleHeaderTableViewCell.swift */; };
 		6CDBDE7B1B64879300D1CBD3 /* ArticleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDBDE7A1B64879300D1CBD3 /* ArticleListTableViewController.swift */; };
 		6CDBDE7E1B648A8200D1CBD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDBDE7D1B648A8200D1CBD3 /* Constants.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +61,8 @@
 		6CB0B37D1B65396D00FC969C /* Article+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Article+CoreDataProperties.swift"; path = "Models/Article+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6CB0B37E1B65396D00FC969C /* Article.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Article.swift; path = Models/Article.swift; sourceTree = "<group>"; };
 		6CB0B3811B654D6900FC969C /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Models/CoreDataManager.swift; sourceTree = "<group>"; };
+		6CB0B3851B6576F300FC969C /* ArticleDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleDetailTableViewController.swift; path = Controllers/ArticleDetailTableViewController.swift; sourceTree = "<group>"; };
+		6CB0B3881B65790800FC969C /* ArticleHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleHeaderTableViewCell.swift; path = "Controllers/Custom Cells/ArticleHeaderTableViewCell.swift"; sourceTree = "<group>"; };
 		6CDBDE7A1B64879300D1CBD3 /* ArticleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleListTableViewController.swift; path = Controllers/ArticleListTableViewController.swift; sourceTree = "<group>"; };
 		6CDBDE7D1B648A8200D1CBD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "Supporting Files/Constants.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,10 +166,20 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		6CB0B3871B6578E300FC969C /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6CB0B3881B65790800FC969C /* ArticleHeaderTableViewCell.swift */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		6CDBDE791B64872900D1CBD3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				6CDBDE7A1B64879300D1CBD3 /* ArticleListTableViewController.swift */,
+				6CB0B3851B6576F300FC969C /* ArticleDetailTableViewController.swift */,
+				6CB0B3871B6578E300FC969C /* Custom Cells */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -312,7 +326,9 @@
 				6CAD41D51B64356300436298 /* NetworkManager.swift in Sources */,
 				6C0797FA1B643EBB008C1B35 /* ArticleParser.swift in Sources */,
 				5F98D1D31B62DC1100FAB688 /* AppDelegate.swift in Sources */,
+				6CB0B3891B65790800FC969C /* ArticleHeaderTableViewCell.swift in Sources */,
 				6CB0B3801B65396D00FC969C /* Article.swift in Sources */,
+				6CB0B3861B6576F300FC969C /* ArticleDetailTableViewController.swift in Sources */,
 				5F98D1DB1B62DC1100FAB688 /* google_news_reader.xcdatamodeld in Sources */,
 				6CB0B3821B654D6900FC969C /* CoreDataManager.swift in Sources */,
 				6CDBDE7E1B648A8200D1CBD3 /* Constants.swift in Sources */,

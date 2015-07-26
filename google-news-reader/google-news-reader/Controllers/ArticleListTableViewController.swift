@@ -94,7 +94,6 @@ class ArticleListTableViewController: UITableViewController {
         return 0
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // TODO: FIXME, custom cells
@@ -112,11 +111,12 @@ class ArticleListTableViewController: UITableViewController {
                 cell.imageView?.image = cellImage
             }
         }
-        
-        
-        
 
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("showArticleDetail", sender: indexPath)
     }
     
     @IBAction func refreshTable(sender: AnyObject) {
@@ -129,4 +129,16 @@ class ArticleListTableViewController: UITableViewController {
         }
     }
     
+    // MARK: Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let detailVC = segue.destinationViewController as? ArticleDetailTableViewController {
+            if let indexPath = sender as? NSIndexPath {
+                if let dataSource = self.fetchedResultsController.fetchedObjects as? [Article] {
+                    detailVC.article = dataSource[indexPath.row]
+                }
+                
+            }
+        }
+    }
 }
