@@ -22,7 +22,7 @@ Test devices: iPhone 5 running iOS 8.1 and iPhone 6 running iOS 8.4. iPhone Simu
  * The app caches article data in Core Data.  Data is loaded from Core Data into the initial article list table view using an `NSFetchedResultsController`.  If the app is launched without Internet, but has previously downloaded articles successfully, those articles will persist.  The article content (webpage) is not cached.
 
 ###Project Architecture:
-#####I broke the project into three main buckets of complexity: API (network requests and data parsing), Data Models, and View Controllers.
+I broke the project into three main buckets of complexity: API (network requests and data parsing), Data Models, and View Controllers.
 * The API group contains a Network Manager, which performs web requests to get article data.  It contains a custom `ErrorType` that is used app-wide to handle any issues that may come from network or data parsing errors.  The Network Manager hooks directly into my XML parsing abstraction class, `ArticleParser`.  This class provides a wrapper around the built-in `NSXMLParser`, taking in article `NSData`, parsing through it item by item, creating prototype Article objects.
 * The Models group contains my Article `NSManagedObject`, custom initilizers, and a Core Data helper class to cache the prototype Article objects returned from the parser into Core Data as `NSManagedObjects`.
 * The Controllers group contains the master and detail `UIViewController` subclasses and their associated custom `UITableViewCells`.
