@@ -15,3 +15,8 @@ let kGoogleNewsArticleDateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 // Regular Expressions
 let kImgTagRegEx = "<img src=[^>]+>"
 let kImgTagUrlRegEx = "\"//(.*?)\""
+
+// Error Messages
+let kNetworkFailureMessage = "There was a problem downloading articles. Please check your network connetion and try again"
+let kParsingErrorMessage = "The was a problem parsing downloaded articles. Please try again."
+let kUnknownErrorMessage = "There was a problem downloading articles. Please try again later."

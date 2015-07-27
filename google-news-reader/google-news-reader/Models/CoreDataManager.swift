@@ -63,6 +63,5 @@ class CoreDataManager: NSObject {
 //                    print("Error: \(error)")
 //                }
         
-        // TODO: If CoreData save fails, throw error or return articles without caching
     }
 }
