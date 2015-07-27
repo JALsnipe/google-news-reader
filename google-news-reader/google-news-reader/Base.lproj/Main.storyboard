@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Google News Reader-->
@@ -14,13 +15,53 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8vp-14-hOT">
-                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleListCell" rowHeight="88" id="8vp-14-hOT" customClass="ArticleListTableViewCell" customModule="google_news_reader" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="86" width="600" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8vp-14-hOT" id="1Vp-j7-j7f">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5f9-H9-LgX">
+                                            <rect key="frame" x="8" y="4" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="i4r-dA-cyC"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lindsey Graham: Donald Trump 'Selling Fear and Prejudice' - ABC News" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZi-fN-MYd">
+                                            <rect key="frame" x="96" y="8" width="496" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Nairobi, Kenya (CNN) President Barack Obama in Kenya on Saturday cracked a joke about the most famous conspiracy theory" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3W-fK-glU">
+                                            <rect key="frame" x="96" y="51" width="496" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="zfA-HU-h3A"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="5f9-H9-LgX" firstAttribute="centerY" secondItem="1Vp-j7-j7f" secondAttribute="centerY" id="2NS-Cv-zq7"/>
+                                        <constraint firstItem="U3W-fK-glU" firstAttribute="trailing" secondItem="jZi-fN-MYd" secondAttribute="trailing" id="DEq-Lq-DIu"/>
+                                        <constraint firstItem="5f9-H9-LgX" firstAttribute="top" secondItem="1Vp-j7-j7f" secondAttribute="topMargin" constant="-4" id="Dhf-xZ-RFA"/>
+                                        <constraint firstItem="U3W-fK-glU" firstAttribute="top" secondItem="jZi-fN-MYd" secondAttribute="bottom" constant="22" id="NVx-Vk-7RC"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="U3W-fK-glU" secondAttribute="bottom" constant="7.5" id="P5R-fa-V7e"/>
+                                        <constraint firstItem="jZi-fN-MYd" firstAttribute="leading" secondItem="5f9-H9-LgX" secondAttribute="trailing" constant="8" symbolic="YES" id="VUp-1S-gbp"/>
+                                        <constraint firstItem="5f9-H9-LgX" firstAttribute="leading" secondItem="1Vp-j7-j7f" secondAttribute="leadingMargin" id="ayL-aG-Rrj"/>
+                                        <constraint firstAttribute="trailing" secondItem="U3W-fK-glU" secondAttribute="trailing" constant="8" id="f5y-zC-kB9"/>
+                                        <constraint firstItem="U3W-fK-glU" firstAttribute="leading" secondItem="5f9-H9-LgX" secondAttribute="trailing" constant="8" id="jTB-CC-P16"/>
+                                        <constraint firstAttribute="topMargin" secondItem="jZi-fN-MYd" secondAttribute="top" id="wvq-ts-0lZ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="articleDescriptionLabel" destination="U3W-fK-glU" id="OPx-3k-XXX"/>
+                                    <outlet property="articleImageView" destination="5f9-H9-LgX" id="51S-JN-MR3"/>
+                                    <outlet property="articleTitleLabel" destination="jZi-fN-MYd" id="wo6-nS-TFD"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

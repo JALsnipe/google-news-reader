@@ -100,22 +100,24 @@ class ArticleListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // TODO: FIXME, custom cells
-//        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("articleListCell", forIndexPath: indexPath) as! ArticleListTableViewCell
 
         // Configure the cell...
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-        
         if let dataSource = self.fetchedResultsController.fetchedObjects as? [Article] {
-            cell.textLabel?.text = dataSource[indexPath.row].title
-            cell.detailTextLabel?.text = dataSource[indexPath.row].description
+            cell.articleTitleLabel.text = dataSource[indexPath.row].title
+            cell.articleDescriptionLabel.text = dataSource[indexPath.row].articleDesciption
             
             if let cellImage: UIImage = dataSource[indexPath.row].image as? UIImage {
-                cell.imageView?.image = cellImage
+                cell.articleImageView.image = cellImage
             }
         }
 
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 88.0
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
