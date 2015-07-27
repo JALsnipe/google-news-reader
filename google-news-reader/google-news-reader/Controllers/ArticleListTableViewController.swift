@@ -110,6 +110,8 @@ class ArticleListTableViewController: UITableViewController {
             
             if let cellImage: UIImage = dataSource[indexPath.row].image as? UIImage {
                 cell.articleImageView.image = cellImage
+            } else {
+                cell.articleImageView.image = UIImage(named: "img_thumb_placeholder")
             }
         }
 

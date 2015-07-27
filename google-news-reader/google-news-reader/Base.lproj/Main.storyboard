@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="86" width="600" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8vp-14-hOT" id="1Vp-j7-j7f">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5f9-H9-LgX">
@@ -35,11 +35,11 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Nairobi, Kenya (CNN) President Barack Obama in Kenya on Saturday cracked a joke about the most famous conspiracy theory" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3W-fK-glU">
-                                            <rect key="frame" x="96" y="51" width="496" height="21"/>
+                                            <rect key="frame" x="96" y="37" width="496" height="50.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="zfA-HU-h3A"/>
+                                                <constraint firstAttribute="height" constant="50.5" id="zfA-HU-h3A"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -48,8 +48,8 @@
                                         <constraint firstItem="5f9-H9-LgX" firstAttribute="centerY" secondItem="1Vp-j7-j7f" secondAttribute="centerY" id="2NS-Cv-zq7"/>
                                         <constraint firstItem="U3W-fK-glU" firstAttribute="trailing" secondItem="jZi-fN-MYd" secondAttribute="trailing" id="DEq-Lq-DIu"/>
                                         <constraint firstItem="5f9-H9-LgX" firstAttribute="top" secondItem="1Vp-j7-j7f" secondAttribute="topMargin" constant="-4" id="Dhf-xZ-RFA"/>
-                                        <constraint firstItem="U3W-fK-glU" firstAttribute="top" secondItem="jZi-fN-MYd" secondAttribute="bottom" constant="22" id="NVx-Vk-7RC"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="U3W-fK-glU" secondAttribute="bottom" constant="7.5" id="P5R-fa-V7e"/>
+                                        <constraint firstItem="U3W-fK-glU" firstAttribute="top" secondItem="jZi-fN-MYd" secondAttribute="bottom" constant="8" id="NVx-Vk-7RC"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="U3W-fK-glU" secondAttribute="bottom" constant="-8" id="P5R-fa-V7e"/>
                                         <constraint firstItem="jZi-fN-MYd" firstAttribute="leading" secondItem="5f9-H9-LgX" secondAttribute="trailing" constant="8" symbolic="YES" id="VUp-1S-gbp"/>
                                         <constraint firstItem="5f9-H9-LgX" firstAttribute="leading" secondItem="1Vp-j7-j7f" secondAttribute="leadingMargin" id="ayL-aG-Rrj"/>
                                         <constraint firstAttribute="trailing" secondItem="U3W-fK-glU" secondAttribute="trailing" constant="8" id="f5y-zC-kB9"/>

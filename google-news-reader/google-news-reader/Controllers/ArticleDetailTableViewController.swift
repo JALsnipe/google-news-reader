@@ -66,6 +66,8 @@ class ArticleDetailTableViewController: UITableViewController {
             if let image: UIImage = imageObj as? UIImage {
                 cell.articleImageView.image = image
             }
+        } else {
+            cell.articleImageView.image = UIImage(named: "img_thumb_placeholder")
         }
 
         return cell
