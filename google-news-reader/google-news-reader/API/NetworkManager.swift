@@ -99,7 +99,7 @@ class NetworkManager: NSObject {
                 
                 articlesWithImages.append(article)
                 
-                index++;
+                index++
                 
                 if index == articles.count {
                     completion(articles: articlesWithImages)

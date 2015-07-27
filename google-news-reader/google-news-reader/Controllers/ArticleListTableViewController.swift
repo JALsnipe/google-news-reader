@@ -35,11 +35,26 @@ class ArticleListTableViewController: UITableViewController {
             print("Error performing initial fetch: \(error)")
         }
         
+        self.reloadTableWithArticles()
+    }
+    
+    func reloadTableWithArticles() {
         // Download new articles
         NetworkManager().fetchAllArticlesWithCompletion { (data, error) -> Void in
             
             if error != nil {
-                // TODO: handle errors and return
+                // handle errors and return
+                if let networkError = error as? NetworkError {
+                    switch networkError{
+                    case .NetworkFailure:
+                        self.alertUserWithTitleAndMessage("Network Error", message: kNetworkFailureMessage)
+                        return
+                        
+                    default:
+                        self.alertUserWithTitleAndMessage("Unknown Error", message: kUnknownErrorMessage)
+                        return
+                    }
+                }
             }
             
             if let unwrappedData = data as? NSData {
@@ -59,7 +74,17 @@ class ArticleListTableViewController: UITableViewController {
                             }
                         })
                     } else {
-                        // TODO: handle error
+                        // handle error
+                        if let networkError = error as? NetworkError {
+                            switch networkError {
+                            case .ParsingError:
+                                self.alertUserWithTitleAndMessage("Network Error", message: kParsingErrorMessage)
+                                return
+                                
+                            default:
+                                self.alertUserWithTitleAndMessage("Unknown Error", message: kUnknownErrorMessage)
+                            }
+                        }
                     }
                     
                 })
@@ -74,10 +99,8 @@ class ArticleListTableViewController: UITableViewController {
     
     @IBAction func refreshTable(sender: AnyObject) {
         
-        // TODO: FIXME, refresh article content rather than just table view
-        
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.tableView.reloadData()
+            self.reloadTableWithArticles()
             sender.endRefreshing()
         }
     }
@@ -99,10 +122,7 @@ class ArticleListTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        // TODO: FIXME, custom cells
         let cell = tableView.dequeueReusableCellWithIdentifier("articleListCell", forIndexPath: indexPath) as! ArticleListTableViewCell
-
-        // Configure the cell...
         
         if let dataSource = self.fetchedResultsController.fetchedObjects as? [Article] {
             cell.articleTitleLabel.text = dataSource[indexPath.row].title
