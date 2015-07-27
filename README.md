@@ -1,6 +1,10 @@
 # google-news-reader
 Google News RSS Reader in Swift 2.0
 
+![simulator screen shot jul 26 2015 11 56 51 pm](https://cloud.githubusercontent.com/assets/4513736/8898443/44e7be9e-33f2-11e5-90b5-310dd6b10008.png)
+![simulator screen shot jul 26 2015 11 57 01 pm](https://cloud.githubusercontent.com/assets/4513736/8898444/460ae076-33f2-11e5-8a98-f28fb2c2d036.png)
+
+
 Development Environment: Xcode 7 Beta 4
 
 Test devices: iPhone 5 running iOS 8.1 and iPhone 6 running iOS 8.4. iPhone Simulator (all devices) running iOS 9 Beta
